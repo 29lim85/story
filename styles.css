@@ -33,18 +33,21 @@ code {
     font-family: 'Courier New', Courier, monospace;
 }
 
-.copy-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.copy-btn, .translate-btn {
     background-color: #2c3e50;
     color: #fff;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
+    margin-top: 10px;
 }
 
-.copy-btn:hover {
+.copy-btn:hover, .translate-btn:hover {
     background-color: #34495e;
+}
+
+.translate-btn {
+    display: block;
+    margin: 10px 0;
 }
