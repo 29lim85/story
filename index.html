@@ -1,72 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>History of Computing and Electronics</title>
-<style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f0f0; color: #333; }
-    .slide { background-color: #fff; border: 1px solid #ddd; padding: 20px; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .title { font-size: 24px; color: #0056b3; margin-bottom: 15px; }
-    .content { font-size: 16px; line-height: 1.6; }
-    h2 { color: #444; }
-    p { margin: 10px 0; }
-    ul { margin: 10px 20px; }
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-top: 20px; /* added margin */
-    }
-    th, td {
-        border: 1px solid black;
-        padding: 12px; /* increased padding */
-        text-align: center; /* text center alignment */
-    }
-    th {
-        background-color: #f2f2f2; /* optional: background color for header row */
-    }
-</style>
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Code Presentation</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Python Code Presentation</h1>
+        
+        <section>
+            <h2>main.py</h2>
+            <pre><code class="python">
+# Import the functions get_projects_with_forks_over_300 and save_projects_to_csv from git_api_filter.py
+from git_api_filter import get_projects_with_forks_over_300, save_projects_to_csv
 
-    <header>
-        <h1>HTML elements </h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#contact"class="contact">Contact</a></li>
-            <li><a href="#about"class="about">About</a></li>
+# Define the base URL for the GitHub API
+api_url = "https://api.github.com"
+
+# Define the search keyword to be used in the API query
+search_key = "example"
+
+# Call the function to get projects with more than 300 forks using the API URL and search keyword
+projects = get_projects_with_forks_over_300(api_url, search_key)
+
+# Define the filename for the CSV file where the projects will be saved
+csv_filename = "projects_over_300_forks.csv"
+
+# Call the function to save the filtered projects to the specified CSV file
+save_projects_to_csv(projects, csv_filename)
+
+# Iterate over the projects dictionary and print each project's details
+for project_name, project in projects.items():
+    print(project)
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>git_api_filter.py</h2>
+            <pre><code class="python">
+# Import the requests library for making HTTP requests
+import requests
+
+# Import the csv library for handling CSV file operations
+import csv
+
+# Import the Project class from project_class.py
+from project_class import Project
+
+# Define the function to get projects with more than 300 forks
+def get_projects_with_forks_over_300(api_url, search_key):
+    try:
+        # Make a GET request to the GitHub API to search for repositories with the specified search keyword
+        response = requests.get(f"{api_url}/search/repositories", params={"q": search_key})
+        
+        # Raise an exception if the request was not successful
+        response.raise_for_status()
+        
+        # Parse the JSON response from the API
+        projects_data = response.json()
+        
+        # Debug: Print the entire API response
+        print("API Response:", projects_data)
+
+        # Initialize an empty dictionary to store the filtered projects
+        projects = {}
+        
+        # Iterate over the items in the API response
+        for project in projects_data.get('items', []):
+            # Debug: Print each project's name and fork count
+            print(f"Project: {project['name']}, Forks: {project['forks']}")
             
-        </ul>
-    </nav>
-    <main>
-        <section>
-            <h2>article title 1 </h2>
-            <p>Aperiam laboriosam harum deserunt eum dolor distinctio perferendis iste iusto non at? Libero, et veniam! Quis culpa odio molestiae voluptatibus optio in!</p>
-            <img src="https://tpc.googlesyndication.com/simgad/11752209067079460938" alt="Example Image">
-        </section>
-        
-        <section>
-            <h2>article title 2 </h2>
-            <p>Aperiam laboriosam harum deserunt eum dolor distinctio perferendis iste iusto non at? Libero, et veniam! Quis culpa odio molestiae voluptatibus optio in!</p>
-            <img src="https://tpc.googlesyndication.com/simgad/11752209067079460938" alt="Example Image">
-        </section>
-        
-        <section>
-            <h2>article title 3 </h2>
-            <p>Aperiam laboriosam harum deserunt eum dolor distinctio perferendis iste iusto non at? Libero, et veniam! Quis culpa odio molestiae voluptatibus optio in!</p>
-            <img src="https://tpc.googlesyndication.com/simgad/11752209067079460938" alt="Example Image">
-        </section>
-    </main>
-    <aside>
+            # Check if the project has more than 300 forks
+            if project['forks'] > 300:
+                # Create a Project instance with the project's details
+                proj = Project(
+                    name=project['name'],
+                    author=project['owner']['login'],
+                    author_link=project['owner']['html_url'],
+                    project_link=project['html_url']
+                )
+                # Add the Project instance to the projects dictionary with the project's name as the key
+                projects[proj.name] = proj
 
-<p class="contact">Lorem ipsum dolor, sit amet consectetur adipisic</p>
-<p class="about">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae hic deserunt similique quae repellat eius dignissimos illo, corrupti maxime ea cum error unde odio possimus natus minima blanditiis. Rem, doloremque. </p>
+        # Return the dictionary of filtered projects
+        return projects
+    except requests.exceptions.RequestException as e:
+        # Print an error message if an exception occurs during the API request
+        print(f"An error occurred: {e}")
+        return {}
+
+# Define the function to save the projects to a CSV file
+def save_projects_to_csv(projects, filename):
+    # Open the specified CSV file in write mode
+    with open(filename, mode='w', newline='') as file:
+        # Create a CSV writer object
+        writer = csv.writer(file)
         
-    <footer>
-        <p>&copy; HTML Lesson 03.28.2024 </p>
-    </footer>
+        # Write the header row to the CSV file
+        writer.writerow(["Project Name", "Author", "Author Link", "Project Link"])
+        
+        # Iterate over the projects dictionary
+        for project in projects.values():
+            # Write each project's details to the CSV file
+            writer.writerow([project.name, project.author, project.author_link, project.project_link])
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>project_class.py</h2>
+            <pre><code class="python">
+# Define the Project class
+class Project:
+    # Initialize the Project instance with name, author, author_link, and project_link attributes
+    def __init__(self, name, author, author_link, project_link):
+        self.name = name
+        self.author = author
+        self.author_link = author_link
+        self.project_link = project_link
+
+    # Define the string representation of the Project instance
+    def __str__(self):
+        return f"Project Name: {self.name}\nAuthor: {self.author}\nAuthor Link: {self.author_link}\nProject Link: {self.project_link}"
+            </code></pre>
+        </section>
+    </div>
 </body>
 </html>
