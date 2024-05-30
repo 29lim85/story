@@ -11,6 +11,7 @@
     <div class="container">
         <h1>Python Code Presentation</h1>
         <button class="translate-btn" onclick="translateToItalian()">Translate to Italian</button>
+        <button class="translate-btn" onclick="translateToEnglish()">Translate to English</button>
         
         <section>
             <h2>main.py</h2>
@@ -97,7 +98,7 @@ def get_projects_with_forks_over_300(api_url, search_key):
 # Define the function to save the projects to a CSV file
 def save_projects_to_csv(projects, filename):
     # Open the specified CSV file in write mode
-    with open(filename, mode='w', newline='') as file):
+    with open(filename, mode='w', newline='') as file:
         # Create a CSV writer object
         writer = csv.writer(file)
         
@@ -130,56 +131,127 @@ class Project:
             </code></pre>
             <button class="copy-btn" data-clipboard-target="#project-class">Copy</button>
         </section>
+
+        <section>
+            <h2>Projects Table</h2>
+            <table id="projects-table">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Author</th>
+                        <th>Author Link</th>
+                        <th>Project Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>example</td>
+                        <td>golang</td>
+                        <td><a href="https://github.com/golang">https://github.com/golang</a></td>
+                        <td><a href="https://github.com/golang/example">https://github.com/golang/example</a></td>
+                    </tr>
+                    <!-- Add more rows here based on the provided data -->
+                </tbody>
+            </table>
+        </section>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/show-language/prism-show-language.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             new ClipboardJS('.copy-btn');
         });
 
-        function translateToItalian() {
-            const translations = {
-                '# Import the functions get_projects_with_forks_over_300 and save_projects_to_csv from git_api_filter.py': '# Importa le funzioni get_projects_with_forks_over_300 e save_projects_to_csv da git_api_filter.py',
-                '# Define the base URL for the GitHub API': '# Definisci l\'URL base per l\'API di GitHub',
-                '# Define the search keyword to be used in the API query': '# Definisci la parola chiave di ricerca da utilizzare nella query API',
-                '# Call the function to get projects with more than 300 forks using the API URL and search keyword': '# Chiama la funzione per ottenere progetti con più di 300 fork utilizzando l\'URL dell\'API e la parola chiave di ricerca',
-                '# Define the filename for the CSV file where the projects will be saved': '# Definisci il nome del file CSV in cui verranno salvati i progetti',
-                '# Call the function to save the filtered projects to the specified CSV file': '# Chiama la funzione per salvare i progetti filtrati nel file CSV specificato',
-                '# Iterate over the projects dictionary and print each project\'s details': '# Itera sul dizionario dei progetti e stampa i dettagli di ciascun progetto',
-                '# Import the requests library for making HTTP requests': '# Importa la libreria requests per effettuare richieste HTTP',
-                '# Import the csv library for handling CSV file operations': '# Importa la libreria csv per gestire le operazioni sui file CSV',
-                '# Import the Project class from project_class.py': '# Importa la classe Project da project_class.py',
-                '# Define the function to get projects with more than 300 forks': '# Definisci la funzione per ottenere progetti con più di 300 fork',
-                '# Make a GET request to the GitHub API to search for repositories with the specified search keyword': '# Effettua una richiesta GET all\'API di GitHub per cercare repository con la parola chiave di ricerca specificata',
-                '# Raise an exception if the request was not successful': '# Solleva un\'eccezione se la richiesta non è riuscita',
-                '# Parse the JSON response from the API': '# Analizza la risposta JSON dall\'API',
-                '# Debug: Print the entire API response': '# Debug: Stampa l\'intera risposta dell\'API',
-                '# Initialize an empty dictionary to store the filtered projects': '# Inizializza un dizionario vuoto per memorizzare i progetti filtrati',
-                '# Iterate over the items in the API response': '# Itera sugli elementi nella risposta dell\'API',
-                '# Debug: Print each project\'s name and fork count': '# Debug: Stampa il nome e il conteggio dei fork di ciascun progetto',
-                '# Check if the project has more than 300 forks': '# Verifica se il progetto ha più di 300 fork',
-                '# Create a Project instance with the project\'s details': '# Crea un\'istanza di Project con i dettagli del progetto',
-                '# Add the Project instance to the projects dictionary with the project\'s name as the key': '# Aggiungi l\'istanza di Project al dizionario dei progetti con il nome del progetto come chiave',
-                '# Return the dictionary of filtered projects': '# Restituisci il dizionario dei progetti filtrati',
-                '# Print an error message if an exception occurs during the API request': '# Stampa un messaggio di errore se si verifica un\'eccezione durante la richiesta API',
-                '# Define the function to save the projects to a CSV file': '# Definisci la funzione per salvare i progetti in un file CSV',
-                '# Open the specified CSV file in write mode': '# Apri il file CSV specificato in modalità scrittura',
-                '# Create a CSV writer object': '# Crea un oggetto writer CSV',
-                '# Write the header row to the CSV file': '# Scrivi la riga di intestazione nel file CSV',
-                '# Iterate over the projects dictionary': '# Itera sul dizionario dei progetti',
-                '# Write each project\'s details to the CSV file': '# Scrivi i dettagli di ciascun progetto nel file CSV',
-                '# Define the Project class': '# Definisci la classe Project',
-                '# Initialize the Project instance with name, author, author_link, and project_link attributes': '# Inizializza l\'istanza di Project con gli attributi name, author, author_link e project_link',
-                '# Define the string representation of the Project instance': '# Definisci la rappresentazione in formato stringa dell\'istanza di Project'
-            };
+        const translationsToItalian = {
+            '# Import the functions get_projects_with_forks_over_300 and save_projects_to_csv from git_api_filter.py': '# Importa le funzioni get_projects_with_forks_over_300 e save_projects_to_csv da git_api_filter.py',
+            '# Define the base URL for the GitHub API': '# Definisci l\'URL base per l\'API di GitHub',
+            '# Define the search keyword to be used in the API query': '# Definisci la parola chiave di ricerca da utilizzare nella query API',
+            '# Call the function to get projects with more than 300 forks using the API URL and search keyword': '# Chiama la funzione per ottenere progetti con più di 300 fork utilizzando l\'URL dell\'API e la parola chiave di ricerca',
+            '# Define the filename for the CSV file where the projects will be saved': '# Definisci il nome del file CSV in cui verranno salvati i progetti',
+            '# Call the function to save the filtered projects to the specified CSV file': '# Chiama la funzione per salvare i progetti filtrati nel file CSV specificato',
+            '# Iterate over the projects dictionary and print each project\'s details': '# Itera sul dizionario dei progetti e stampa i dettagli di ciascun progetto',
+            '# Import the requests library for making HTTP requests': '# Importa la libreria requests per effettuare richieste HTTP',
+            '# Import the csv library for handling CSV file operations': '# Importa la libreria csv per gestire le operazioni sui file CSV',
+            '# Import the Project class from project_class.py': '# Importa la classe Project da project_class.py',
+            '# Define the function to get projects with more than 300 forks': '# Definisci la funzione per ottenere progetti con più di 300 fork',
+            '# Make a GET request to the GitHub API to search for repositories with the specified search keyword': '# Effettua una richiesta GET all\'API di GitHub per cercare repository con la parola chiave di ricerca specificata',
+            '# Raise an exception if the request was not successful': '# Solleva un\'eccezione se la richiesta non è riuscita',
+            '# Parse the JSON response from the API': '# Analizza la risposta JSON dall\'API',
+            '# Debug: Print the entire API response': '# Debug: Stampa l\'intera risposta dell\'API',
+            '# Initialize an empty dictionary to store the filtered projects': '# Inizializza un dizionario vuoto per memorizzare i progetti filtrati',
+            '# Iterate over the items in the API response': '# Itera sugli elementi nella risposta dell\'API',
+            '# Debug: Print each project\'s name and fork count': '# Debug: Stampa il nome e il conteggio dei fork di ciascun progetto',
+            '# Check if the project has more than 300 forks': '# Verifica se il progetto ha più di 300 fork',
+            '# Create a Project instance with the project\'s details': '# Crea un\'istanza di Project con i dettagli del progetto',
+            '# Add the Project instance to the projects dictionary with the project\'s name as the key': '# Aggiungi l\'istanza di Project al dizionario dei progetti con il nome del progetto come chiave',
+            '# Return the dictionary of filtered projects': '# Restituisci il dizionario dei progetti filtrati',
+            '# Print an error message if an exception occurs during the API request': '# Stampa un messaggio di errore se si verifica un\'eccezione durante la richiesta API',
+            '# Define the function to save the projects to a CSV file': '# Definisci la funzione per salvare i progetti in un file CSV',
+            '# Open the specified CSV file in write mode': '# Apri il file CSV specificato in modalità scrittura',
+            '# Create a CSV writer object': '# Crea un oggetto writer CSV',
+            '# Write the header row to the CSV file': '# Scrivi la riga di intestazione nel file CSV',
+            '# Iterate over the projects dictionary': '# Itera sul dizionario dei progetti',
+            '# Write each project\'s details to the CSV file': '# Scrivi i dettagli di ciascun progetto nel file CSV',
+            '# Define the Project class': '# Definisci la classe Project',
+            '# Initialize the Project instance with name, author, author_link, and project_link attributes': '# Inizializza l\'istanza di Project con gli attributi name, author, author_link e project_link',
+            '# Define the string representation of the Project instance': '# Definisci la rappresentazione in formato stringa dell\'istanza di Project'
+        };
 
+        const translationsToEnglish = {
+            '# Importa le funzioni get_projects_with_forks_over_300 e save_projects_to_csv da git_api_filter.py': '# Import the functions get_projects_with_forks_over_300 and save_projects_to_csv from git_api_filter.py',
+            '# Definisci l\'URL base per l\'API di GitHub': '# Define the base URL for the GitHub API',
+            '# Definisci la parola chiave di ricerca da utilizzare nella query API': '# Define the search keyword to be used in the API query',
+            '# Chiama la funzione per ottenere progetti con più di 300 fork utilizzando l\'URL dell\'API e la parola chiave di ricerca': '# Call the function to get projects with more than 300 forks using the API URL and search keyword',
+            '# Definisci il nome del file CSV in cui verranno salvati i progetti': '# Define the filename for the CSV file where the projects will be saved',
+            '# Chiama la funzione per salvare i progetti filtrati nel file CSV specificato': '# Call the function to save the filtered projects to the specified CSV file',
+            '# Itera sul dizionario dei progetti e stampa i dettagli di ciascun progetto': '# Iterate over the projects dictionary and print each project\'s details',
+            '# Importa la libreria requests per effettuare richieste HTTP': '# Import the requests library for making HTTP requests',
+            '# Importa la libreria csv per gestire le operazioni sui file CSV': '# Import the csv library for handling CSV file operations',
+            '# Importa la classe Project da project_class.py': '# Import the Project class from project_class.py',
+            '# Definisci la funzione per ottenere progetti con più di 300 fork': '# Define the function to get projects with more than 300 forks',
+            '# Effettua una richiesta GET all\'API di GitHub per cercare repository con la parola chiave di ricerca specificata': '# Make a GET request to the GitHub API to search for repositories with the specified search keyword',
+            '# Solleva un\'eccezione se la richiesta non è riuscita': '# Raise an exception if the request was not successful',
+            '# Analizza la risposta JSON dall\'API': '# Parse the JSON response from the API',
+            '# Debug: Stampa l\'intera risposta dell\'API': '# Debug: Print the entire API response',
+            '# Inizializza un dizionario vuoto per memorizzare i progetti filtrati': '# Initialize an empty dictionary to store the filtered projects',
+            '# Itera sugli elementi nella risposta dell\'API': '# Iterate over the items in the API response',
+            '# Debug: Stampa il nome e il conteggio dei fork di ciascun progetto': '# Debug: Print each project\'s name and fork count',
+            '# Verifica se il progetto ha più di 300 fork': '# Check if the project has more than 300 forks',
+            '# Crea un\'istanza di Project con i dettagli del progetto': '# Create a Project instance with the project\'s details',
+            '# Aggiungi l\'istanza di Project al dizionario dei progetti con il nome del progetto come chiave': '# Add the Project instance to the projects dictionary with the project\'s name as the key',
+            '# Restituisci il dizionario dei progetti filtrati': '# Return the dictionary of filtered projects',
+            '# Stampa un messaggio di errore se si verifica un\'eccezione durante la richiesta API': '# Print an error message if an exception occurs during the API request',
+            '# Definisci la funzione per salvare i progetti in un file CSV': '# Define the function to save the projects to a CSV file',
+            '# Apri il file CSV specificato in modalità scrittura': '# Open the specified CSV file in write mode',
+            '# Crea un oggetto writer CSV': '# Create a CSV writer object',
+            '# Scrivi la riga di intestazione nel file CSV': '# Write the header row to the CSV file',
+            '# Itera sul dizionario dei progetti': '# Iterate over the projects dictionary',
+            '# Scrivi i dettagli di ciascun progetto nel file CSV': '# Write each project\'s details to the CSV file',
+            '# Definisci la classe Project': '# Define the Project class',
+            '# Inizializza l\'istanza di Project con gli attributi name, author, author_link e project_link': '# Initialize the Project instance with name, author, author_link, and project_link attributes',
+            '# Definisci la rappresentazione in formato stringa dell\'istanza di Project': '# Define the string representation of the Project instance'
+        };
+
+        function translateToItalian() {
             document.querySelectorAll('pre code').forEach((block) => {
                 block.innerHTML = block.innerHTML.replace(
                     /#.*$/gm,
-                    (match) => translations[match.trim()] || match
+                    (match) => translationsToItalian[match.trim()] || match
+                );
+            });
+
+            Prism.highlightAll();
+        }
+
+        function translateToEnglish() {
+            document.querySelectorAll('pre code').forEach((block) => {
+                block.innerHTML = block.innerHTML.replace(
+                    /#.*$/gm,
+                    (match) => translationsToEnglish[match.trim()] || match
                 );
             });
 
