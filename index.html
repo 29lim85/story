@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Code Presentation</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-okaidia.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -12,7 +13,7 @@
         
         <section>
             <h2>main.py</h2>
-            <pre><code class="python">
+            <pre><code class="language-python">
 # Import the functions get_projects_with_forks_over_300 and save_projects_to_csv from git_api_filter.py
 from git_api_filter import get_projects_with_forks_over_300, save_projects_to_csv
 
@@ -35,11 +36,12 @@ save_projects_to_csv(projects, csv_filename)
 for project_name, project in projects.items():
     print(project)
             </code></pre>
+            <button class="copy-btn" data-clipboard-target="pre code">Copy</button>
         </section>
 
         <section>
             <h2>git_api_filter.py</h2>
-            <pre><code class="python">
+            <pre><code class="language-python">
 # Import the requests library for making HTTP requests
 import requests
 
@@ -106,11 +108,12 @@ def save_projects_to_csv(projects, filename):
             # Write each project's details to the CSV file
             writer.writerow([project.name, project.author, project.author_link, project.project_link])
             </code></pre>
+            <button class="copy-btn" data-clipboard-target="pre code">Copy</button>
         </section>
 
         <section>
             <h2>project_class.py</h2>
-            <pre><code class="python">
+            <pre><code class="language-python">
 # Define the Project class
 class Project:
     # Initialize the Project instance with name, author, author_link, and project_link attributes
@@ -124,7 +127,17 @@ class Project:
     def __str__(self):
         return f"Project Name: {self.name}\nAuthor: {self.author}\nAuthor Link: {self.author_link}\nProject Link: {self.project_link}"
             </code></pre>
+            <button class="copy-btn" data-clipboard-target="pre code">Copy</button>
         </section>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            new ClipboardJS('.copy-btn');
+        });
+    </script>
 </body>
 </html>
